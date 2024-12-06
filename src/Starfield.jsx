@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { useLoader } from '@react-three/fiber';
-import { TextureLoader, Color, AdditiveBlending } from 'three';
+import { Color, AdditiveBlending } from 'three';
 
 const Starfield = ({ numStars = 1000 }) => {
   const groupRef = useRef();

@@ -1,8 +1,8 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { TextureLoader, Color, DoubleSide, AdditiveBlending } from "three";
-import { IcosahedronGeometry, RingGeometry } from "three";
-import { MeshPhongMaterial, ShaderMaterial, MeshBasicMaterial } from "three";
+import { IcosahedronGeometry } from "three";
+import { ShaderMaterial} from "three";
 
 const Planet = ({
   orbitSpeed = 1,
@@ -81,7 +81,7 @@ const Planet = ({
     <group ref={orbitRef}>
       {/* Orbit Line */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[orbitRadius - 0.01, orbitRadius + 0.01, 64]} />
+        <ringGeometry args={[orbitRadius - 0.01, orbitRadius + 0.1, 64]} />
         <meshBasicMaterial color={0xadd8e6} side={DoubleSide} transparent />
       </mesh>
 

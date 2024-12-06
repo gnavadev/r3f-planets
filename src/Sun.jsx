@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useEffect } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { useLoader, useFrame } from '@react-three/fiber';
 import { TextureLoader, IcosahedronGeometry, MeshBasicMaterial, ShaderMaterial, Color, AdditiveBlending, Vector3, BackSide, Mesh, DynamicDrawUsage } from 'three';
 import { ImprovedNoise } from 'three/examples/jsm/math/ImprovedNoise.js';
