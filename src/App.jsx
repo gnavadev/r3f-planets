@@ -6,9 +6,9 @@ import Planet from "./Planet"; // Assuming your Planet component is in the same 
 import planetsData from "./planets.json"; // Import the planet data from the JSON file
 
 const App = () => (
-  <Canvas style={{ width: '100vw', height: '100vh' }} camera={{ position: [0, 0, 50], fov: 75 }}>
+  <Canvas style={{ width: '100vw', height: '100vh' }} camera={{ position: [300, 250, 0], fov: 75 }}>
     <ambientLight intensity={.2}/>
-    <OrbitControls />
+    <OrbitControls target={[0, 0, 0]} />
     
     {/* Sun */}
     <Sun />
