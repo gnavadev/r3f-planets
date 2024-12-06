@@ -1,0 +1,89 @@
+[
+  {
+    "orbitSpeed": 0.0063,
+    "orbitRadius": 50,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 0.45,
+    "planetRotationSpeed": 0.005,
+    "planetRotationDirection": "counterclockwise",
+    "planetTexture": "/assets/2k_mercury.jpg",
+    "rimHex": 16777823
+  },
+  {
+    "orbitSpeed": 0.0057,
+    "orbitRadius": 60,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 1.11,
+    "planetRotationSpeed": 0.005,
+    "planetRotationDirection": "clockwise",
+    "planetTexture": "/assets/2k_venus_surface.jpg",
+    "rimHex": 11935263
+  },
+  {
+    "orbitSpeed": 0.0053,
+    "orbitRadius": 70,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 1.17,
+    "planetRotationSpeed": 0.01,
+    "planetRotationDirection": "counterclockwise",
+    "planetTexture": "/assets/2k_earth_daymap.jpg"
+  },
+  {
+    "orbitSpeed": 0.0047,
+    "orbitRadius": 90,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 0.63,
+    "planetRotationSpeed": 0.01,
+    "planetRotationDirection": "counterclockwise",
+    "planetTexture": "/assets/2k_mars.jpg",
+    "rimHex": 12302388
+  },
+  {
+    "orbitSpeed": 0.0042,
+    "orbitRadius": 110,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 13,
+    "planetRotationSpeed": 0.06,
+    "planetRotationDirection": "counterclockwise",
+    "planetTexture": "/assets/2k_jupiter.jpg",
+    "rimHex": 15907078
+  },
+  {
+    "orbitSpeed": 0.0036,
+    "orbitRadius": 150,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 10.8,
+    "planetRotationSpeed": 0.05,
+    "planetRotationDirection": "counterclockwise",
+    "planetTexture": "/assets/2k_saturn.jpg",
+    "rimHex": 14122802,
+    "rings": {
+      "ringsSize": 5,
+      "ringsTexture": "/assets/saturn-rings.jpg"
+    }
+  },
+  {
+    "orbitSpeed": 0.0034,
+    "orbitRadius": 170,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 4.8,
+    "planetRotationSpeed": 0.02,
+    "planetRotationDirection": "clockwise",
+    "planetTexture": "/assets/2k_uranus.jpg",
+    "rimHex": 10136386,
+    "rings": {
+      "ringsSize": 3,
+      "ringsTexture": "/assets/uranus-rings.jpg"
+    }
+  },
+  {
+    "orbitSpeed": 0.0032,
+    "orbitRadius": 190,
+    "orbitRotationDirection": "clockwise",
+    "planetSize": 4.7,
+    "planetRotationSpeed": 0.02,
+    "planetRotationDirection": "counterclockwise",
+    "planetTexture": "/assets/2k_neptune.jpg",
+    "rimHex": 6035079
+  }
+]
