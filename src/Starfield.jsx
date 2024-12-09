@@ -5,25 +5,32 @@ import { Color, AdditiveBlending } from 'three';
 const Starfield = ({ numStars = 1000 }) => {
   const groupRef = useRef();
 
-  const generateRandomSpherePoint = () => {
-    const radius = Math.random() * 200 + 200;
+  const generateUniformSphericalCoordinates = (
+    minRadius = 200, 
+    maxRadius = 400,
+    baseHue = 0.6
+  ) => {
     const u = Math.random();
     const v = Math.random();
     const theta = 2 * Math.PI * u;
     const phi = Math.acos(2 * v - 1);
+    
+    const radius = minRadius + Math.random() * (maxRadius - minRadius);
+    
     const x = radius * Math.sin(phi) * Math.cos(theta);
     const y = radius * Math.sin(phi) * Math.sin(theta);
     const z = radius * Math.cos(phi);
+    
     return {
       pos: [x, y, z],
-      hue: 0.6,
-      minDist: radius,
+      hue: baseHue + (Math.random() - 0.5) * 0.1,
+      minDist: radius
     };
   };
 
   const stars = [];
   for (let i = 0; i < numStars; i++) {
-    const { pos, hue } = generateRandomSpherePoint();
+    const { pos, hue } = generateUniformSphericalCoordinates();
     const col = new Color().setHSL(hue, 0.2, Math.random());
     stars.push({ position: pos, color: col });
   }

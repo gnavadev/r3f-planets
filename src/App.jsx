@@ -1,19 +1,17 @@
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import Sun from "./Sun"; // Assuming you have a Sun component
-import Starfield from "./Starfield"; // Assuming you have a Starfield component
-import Planet from "./Planet"; // Assuming your Planet component is in the same directory
-import planetsData from "./planets.json"; // Import the planet data from the JSON file
+import Sun from "./Sun"; 
+import Starfield from "./Starfield"; 
+import Planet from "./Planet"; 
+import planetsData from "./planets.json"; 
 
 const App = () => (
   <Canvas style={{ width: '100vw', height: '100vh' }} camera={{ position: [50, 50, 100], fov: 75 }}>
-    <ambientLight intensity={.2}/>
+    <ambientLight intensity={.6}/>
     <OrbitControls target={[0, 0, 0]} />
     
-    {/* Sun */}
     <Sun />
     
-    {/* Dynamically render planets */}
     {planetsData.map((planet, index) => (
       <Planet
         key={index}
@@ -25,11 +23,10 @@ const App = () => (
         planetRotationDirection={planet.planetRotationDirection}
         planetTexture={planet.planetTexture}
         rimHex={planet.rimHex}
-        rings={planet.rings} // Include rings if they exist
+        rings={planet.rings}
       />
     ))}
     
-    {/* Starfield */}
     <Starfield numStars={3000} />
   </Canvas>
 );
