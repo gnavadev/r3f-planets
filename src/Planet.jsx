@@ -5,74 +5,74 @@ import { IcosahedronGeometry } from "three";
 import { ShaderMaterial } from "three";
 
 const Planet = ({
-  orbitSpeed = 1,
-  orbitRadius = 1,
-  orbitRotationDirection = "clockwise",
-  planetSize = 1,
-  planetRotationSpeed = 1,
-  planetRotationDirection = "clockwise",
-  planetTexture = "/assets/mercury-map.jpg",
-  rimHex = 0x0088ff,
-  facingHex = 0x000000,
-  rings = null,
+  trajectoryVelocity = 1,
+  trajectoryRadius = 1,
+  trajectoryDirection = "clockwise",
+  bodyScale = 1,
+  rotationVelocity = 1,
+  rotationDirection = "clockwise",
+  surfaceMap = "/assets/mercury-map.jpg",
+  rimColorValue = 0x0088ff,
+  coreColorValue = 0x000000,
+  ring = null,
   moon = null,
 }) => {
-  const planetGroupRef = useRef();
-  const orbitRef = useRef(); 
-  const loader = new TextureLoader();
-  const map = loader.load(planetTexture);
+  const bodyGroupReference = useRef();
+  const trajectoryReference = useRef(); 
+  const textureProcessor = new TextureLoader();
+  const surfaceTexture = textureProcessor.load(surfaceMap);
 
   useFrame(() => {
-    if (orbitRef.current) {
-      orbitRef.current.rotation.y +=
-        orbitRotationDirection === "clockwise" ? -orbitSpeed : orbitSpeed;
+    if (trajectoryReference.current) {
+      trajectoryReference.current.rotation.y +=
+        trajectoryDirection === "clockwise" ? -trajectoryVelocity : trajectoryVelocity;
     }
-    if (planetGroupRef.current) {
-      planetGroupRef.current.rotation.y +=
-        planetRotationDirection === "clockwise" ? -planetRotationSpeed : planetRotationSpeed;
+    if (bodyGroupReference.current) {
+      bodyGroupReference.current.rotation.y +=
+        rotationDirection === "clockwise" ? -rotationVelocity : rotationVelocity;
     }
   });
 
-  const planetAtmosphereMaterial = new ShaderMaterial({
+  const atmosphericShaderLayer = new ShaderMaterial({
     uniforms: {
-        atmosphereRimColor: { value: new Color(rimHex) },
-        atmosphereCenterColor: { value: new Color(facingHex) },
-        atmosphereBias: { value: 0.05 },
-        atmosphereIntensity: { value: 2.5 },
-        atmosphereExponent: { value: 4.0 }, 
-        atmosphereOpacity: { value: 1.0 },
+        peripheralColor: { value: new Color(rimColorValue) },
+        centralColor: { value: new Color(coreColorValue) },
+        atmosphericOffset: { value: 0.05 },
+        luminosityFactor: { value: 2.5 },
+        spectralExponent: { value: 4.0 }, 
+        transparencyLevel: { value: 1.0 },
     },
     vertexShader: `
-        uniform float atmosphereBias;
-        uniform float atmosphereIntensity;
-        uniform float atmosphereExponent;
+        uniform float atmosphericOffset;
+        uniform float luminosityFactor;
+        uniform float spectralExponent;
 
-        varying float viewAngleFactor;
+        varying float viewAngleModulation;
 
         void main() {
-            vec4 viewSpacePosition = modelViewMatrix * vec4(position, 1.0);
-            vec4 worldSpacePosition = modelMatrix * vec4(position, 1.0);
+            vec4 transformedPosition = modelViewMatrix * vec4(position, 1.0);
+            vec4 globalPosition = modelMatrix * vec4(position, 1.0);
 
-            vec3 worldSpaceNormal = normalize(mat3(modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz) * normal);
-            vec3 viewDirection = normalize(worldSpacePosition.xyz - cameraPosition);
+            vec3 globalNormal = normalize(mat3(modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz) * normal);
+            vec3 observationVector = normalize(globalPosition.xyz - cameraPosition);
 
-            viewAngleFactor = atmosphereBias + atmosphereIntensity * pow(1.0 + dot(viewDirection, worldSpaceNormal), atmosphereExponent);
+            viewAngleModulation = atmosphericOffset + luminosityFactor * pow(1.0 + dot(observationVector, globalNormal), spectralExponent);
 
-            gl_Position = projectionMatrix * viewSpacePosition;
+            gl_Position = projectionMatrix * transformedPosition;
         }
     `,
     fragmentShader: `
-        uniform vec3 atmosphereRimColor;
-        uniform vec3 atmosphereCenterColor;
-        uniform float atmosphereOpacity;
+        uniform vec3 peripheralColor;
+        uniform vec3 centralColor;
+        uniform float transparencyLevel;
 
-        varying float viewAngleFactor;
+        varying float viewAngleModulation;
 
         void main() {
-            float blendFactor = clamp(viewAngleFactor, 0.0, 1.0);
-            vec3 glowColor = mix(atmosphereCenterColor, atmosphereRimColor, blendFactor);
+            float blendFactor = clamp(viewAngleModulation, 0.0, 1.0);
+            vec3 glowSpectrum = mix(centralColor, peripheralColor, blendFactor);
             
-            gl_FragColor = vec4(glowColor, blendFactor * atmosphereOpacity);
+            gl_FragColor = vec4(glowSpectrum, blendFactor * transparencyLevel);
         }
     `,
     transparent: true,
@@ -80,27 +80,27 @@ const Planet = ({
   });
 
   return (
-    <group ref={orbitRef}>
+    <group ref={trajectoryReference}>
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[orbitRadius - 0.01, orbitRadius + 0.2, 64]} />
+        <ringGeometry args={[trajectoryRadius - 0.01, trajectoryRadius + 0.2, 64]} />
         <meshBasicMaterial color={0xadd8e6} side={DoubleSide} transparent />
       </mesh>
 
-      <group ref={planetGroupRef} position={[orbitRadius, 0, 0]}>
+      <group ref={bodyGroupReference} position={[trajectoryRadius, 0, 0]}>
         <mesh>
-          <icosahedronGeometry args={[planetSize, 12]} />
-          <meshPhongMaterial map={map} colorSpace={AdditiveBlending} />
+          <icosahedronGeometry args={[bodyScale, 12]} />
+          <meshPhongMaterial map={surfaceTexture} colorSpace={AdditiveBlending} />
         </mesh>
 
-        <mesh scale={[1.1, 1.1, 1.1]} geometry={new IcosahedronGeometry(planetSize, 12)} material={planetAtmosphereMaterial} />
+        <mesh scale={[1.1, 1.1, 1.1]} geometry={new IcosahedronGeometry(bodyScale, 12)} material={atmosphericShaderLayer} />
 
-        {rings && (
+        {ring && (
           <mesh rotation={[Math.PI / 2, 0, 0]}>
             <ringGeometry
-              args={[planetSize + 0.1, planetSize + 0.1 + rings.size, 128]}
+              args={[bodyScale + 0.1, bodyScale + 0.1 + ring.size, 128]}
             />
             <meshBasicMaterial
-              map={loader.load(rings.texture)}
+              map={textureProcessor.load(ring.texture)}
               side={DoubleSide}
               transparent
               depthWrite={false}
@@ -110,10 +110,10 @@ const Planet = ({
         )}
 
         {moon && (
-          <group position={[planetSize + moon.distance, 2, 0]}>
+          <group position={[bodyScale + moon.distance, 2, 0]}>
             <mesh>
               <sphereGeometry args={[moon.size, 32, 32]} />
-              <meshPhongMaterial map={loader.load(moon.texture)} />
+              <meshPhongMaterial map={textureProcessor.load(moon.texture)} />
             </mesh>
           </group>
         )}

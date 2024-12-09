@@ -55,43 +55,43 @@ function Sun() {
 }
 
 function createSunShaderMaterial(coreColor, atmosphereColor) {
-  return new ShaderMaterial({
+return new ShaderMaterial({
     uniforms: {
-      coreColor: { value: coreColor },
-      atmosphereColor: { value: atmosphereColor },
-      glowIntensity: { value: 0.5 },
-      glowSpread: { value: 1.0 },
-      glowPower: { value: 5.0 },
+      primaryHue: { value: coreColor },
+      secondaryHue: { value: atmosphereColor },
+      luminanceIntensity: { value: 0.5 },
+      radianceSpread: { value: 1.0 },
+      luminancePower: { value: 5.0 },
     },
     vertexShader: `
-      uniform float glowIntensity;
-      uniform float glowSpread;
-      uniform float glowPower;
+      uniform float luminanceIntensity;
+      uniform float radianceSpread;
+      uniform float luminancePower;
       
-      varying float sunGlowFactor;
+      varying float celestialGlowParameter;
       
       void main() {
-        vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
-        vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+        vec4 transformedPosition = modelViewMatrix * vec4(position, 1.0);
+        vec4 globalPosition = modelMatrix * vec4(position, 1.0);
       
-        vec3 worldNormal = normalize(mat3(modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz) * normal);
+        vec3 globalNormal = normalize(mat3(modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz) * normal);
       
-        vec3 viewDirection = normalize(worldPosition.xyz - cameraPosition);
+        vec3 observationVector = normalize(globalPosition.xyz - cameraPosition);
       
-        sunGlowFactor = glowIntensity + glowSpread * pow(1.0 + dot(normalize(viewDirection), worldNormal), glowPower);
+        celestialGlowParameter = luminanceIntensity + radianceSpread * pow(1.0 + dot(normalize(observationVector), globalNormal), luminancePower);
       
-        gl_Position = projectionMatrix * viewPosition;
+        gl_Position = projectionMatrix * transformedPosition;
       }
     `,
     fragmentShader: `
-      uniform vec3 coreColor;
-      uniform vec3 atmosphereColor;
+      uniform vec3 primaryHue;
+      uniform vec3 secondaryHue;
       
-      varying float sunGlowFactor;
+      varying float celestialGlowParameter;
       
       void main() {
-        float glowClamp = clamp(sunGlowFactor, 0.0, 1.0);
-        gl_FragColor = vec4(mix(atmosphereColor, coreColor, vec3(glowClamp)), glowClamp);
+        float glowModulation = clamp(celestialGlowParameter, 0.0, 1.0);
+        gl_FragColor = vec4(mix(secondaryHue, primaryHue, vec3(glowModulation)), glowModulation);
       }
     `,
     transparent: true,

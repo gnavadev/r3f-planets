@@ -15,15 +15,15 @@ const App = () => (
     {planetsData.map((planet, index) => (
       <Planet
         key={index}
-        orbitSpeed={planet.orbitSpeed}
-        orbitRadius={planet.orbitRadius}
-        orbitRotationDirection={planet.orbitRotationDirection}
-        planetSize={planet.planetSize}
-        planetRotationSpeed={planet.planetRotationSpeed}
-        planetRotationDirection={planet.planetRotationDirection}
-        planetTexture={planet.planetTexture}
-        rimHex={planet.rimHex}
-        rings={planet.rings}
+        trajectoryVelocity={planet.trajectoryVelocity}
+        trajectoryRadius={planet.trajectoryRadius}
+        trajectoryDirection={planet.trajectoryDirection}
+        bodyScale={planet.bodyScale}
+        rotationVelocity={planet.rotationVelocity}
+        rotationDirection={planet.rotationDirection}
+        surfaceMap={planet.surfaceMap}
+        rimColorValue={planet.rimColorValue}
+        ring={planet.ring}
         moon={planet.moon}
       />
     ))}

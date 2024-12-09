@@ -1,32 +1,32 @@
 [
   {
-    "orbitSpeed": 0.00474,
-    "orbitRadius": 35.79,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 0.45,
-    "planetRotationSpeed": 0.005,
-    "planetRotationDirection": "counterclockwise",
-    "planetTexture": "/assets/2k_mercury.jpg",
-    "rimHex": 16777823
+    "trajectoryVelocity": 0.00474,
+    "trajectoryRadius": 35.79,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 0.45,
+    "rotationVelocity": 0.005,
+    "rotationDirection": "counterclockwise",
+    "surfaceMap": "/assets/2k_mercury.jpg",
+    "rimColorValue": 16777216
   },
   {
-    "orbitSpeed": 0.0035,
-    "orbitRadius": 40.82,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 1.11,
-    "planetRotationSpeed": 0.005,
-    "planetRotationDirection": "clockwise",
-    "planetTexture": "/assets/2k_venus_surface.jpg",
-    "rimHex": 11935263
+    "trajectoryVelocity": 0.0035,
+    "trajectoryRadius": 40.82,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 1.11,
+    "rotationVelocity": 0.005,
+    "rotationDirection": "clockwise",
+    "surfaceMap": "/assets/2k_venus_surface.jpg",
+    "rimColorValue": 11935423
   },
   {
-    "orbitSpeed": 0.00298,
-    "orbitRadius": 44.96,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 1.17,
-    "planetRotationSpeed": 0.01,
-    "planetRotationDirection": "counterclockwise",
-    "planetTexture": "/assets/2k_earth_daymap.jpg",
+    "trajectoryVelocity": 0.00298,
+    "trajectoryRadius": 44.96,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 1.17,
+    "rotationVelocity": 0.01,
+    "rotationDirection": "counterclockwise",
+    "surfaceMap": "/assets/2k_earth_daymap.jpg",
     "moon": {
       "distance": 2,
       "size": 0.2925,
@@ -34,61 +34,61 @@
     }
   },
   {
-    "orbitSpeed": 0.00241,
-    "orbitRadius": 52.8,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 0.63,
-    "planetRotationSpeed": 0.01,
-    "planetRotationDirection": "counterclockwise",
-    "planetTexture": "/assets/2k_mars.jpg",
-    "rimHex": 12302388
+    "trajectoryVelocity": 0.00241,
+    "trajectoryRadius": 52.8,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 0.63,
+    "rotationVelocity": 0.01,
+    "rotationDirection": "counterclockwise",
+    "surfaceMap": "/assets/2k_mars.jpg",
+    "rimColorValue": 12302601
   },
   {
-    "orbitSpeed": 0.00131,
-    "orbitRadius": 107.85,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 13,
-    "planetRotationSpeed": 0.06,
-    "planetRotationDirection": "counterclockwise",
-    "planetTexture": "/assets/2k_jupiter.jpg",
-    "rimHex": 15907078
-  }, 
+    "trajectoryVelocity": 0.00131,
+    "trajectoryRadius": 107.85,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 13,
+    "rotationVelocity": 0.06,
+    "rotationDirection": "counterclockwise",
+    "surfaceMap": "/assets/2k_jupiter.jpg",
+    "rimColorValue": 15907392
+  },
   {
-    "orbitSpeed": 0.00097,
-    "orbitRadius": 173.2,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 10.8,
-    "planetRotationSpeed": 0.05,
-    "planetRotationDirection": "counterclockwise",
-    "planetTexture": "/assets/2k_saturn.jpg",
-    "rimHex": 14122802,
-    "rings": {
+    "trajectoryVelocity": 0.00097,
+    "trajectoryRadius": 173.2,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 10.8,
+    "rotationVelocity": 0.05,
+    "rotationDirection": "counterclockwise",
+    "surfaceMap": "/assets/2k_saturn.jpg",
+    "rimColorValue": 14123008,
+    "ring": {
       "size": 5,
       "texture": "/assets/saturn-rings.jpg"
     }
   },
   {
-    "orbitSpeed": 0.00068,
-    "orbitRadius": 317.7,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 4.8,
-    "planetRotationSpeed": 0.02,
-    "planetRotationDirection": "clockwise",
-    "planetTexture": "/assets/2k_uranus.jpg",
-    "rimHex": 10136386,
-    "rings": {
+    "trajectoryVelocity": 0.00068,
+    "trajectoryRadius": 317.7,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 4.8,
+    "rotationVelocity": 0.02,
+    "rotationDirection": "clockwise",
+    "surfaceMap": "/assets/2k_uranus.jpg",
+    "rimColorValue": 10136640,
+    "ring": {
       "size": 3,
-      "ringsTexture": "/assets/uranus-rings.jpg"
+      "texture": "/assets/uranus-rings.jpg"
     }
   },
   {
-    "orbitSpeed": 0.00054,
-    "orbitRadius": 481.5,
-    "orbitRotationDirection": "clockwise",
-    "planetSize": 4.7,
-    "planetRotationSpeed": 0.02,
-    "planetRotationDirection": "counterclockwise",
-    "planetTexture": "/assets/2k_neptune.jpg",
-    "rimHex": 6035079
+    "trajectoryVelocity": 0.00054,
+    "trajectoryRadius": 481.5,
+    "trajectoryDirection": "clockwise",
+    "bodyScale": 4.7,
+    "rotationVelocity": 0.02,
+    "rotationDirection": "counterclockwise",
+    "surfaceMap": "/assets/2k_neptune.jpg",
+    "rimColorValue": 6035185
   }
 ]
