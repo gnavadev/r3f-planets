@@ -7,7 +7,7 @@ const Starfield = ({ numStars = 1000 }) => {
 
   const generateUniformSphericalCoordinates = (
     minRadius = 200, 
-    maxRadius = 400,
+    maxRadius = 600,
     baseHue = 0.6
   ) => {
     const u = Math.random();

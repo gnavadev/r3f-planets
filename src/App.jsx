@@ -28,7 +28,7 @@ const App = () => (
       />
     ))}
     
-    <Starfield numStars={3000} />
+    <Starfield numStars={6000} />
   </Canvas>
 );
 
