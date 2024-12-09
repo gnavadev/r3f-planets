@@ -7,7 +7,7 @@ import planetsData from "./planets.json";
 
 const App = () => (
   <Canvas style={{ width: '100vw', height: '100vh' }} camera={{ position: [50, 50, 100], fov: 75 }}>
-    <ambientLight intensity={.6}/>
+    <ambientLight intensity={.8}/>
     <OrbitControls target={[0, 0, 0]} />
     
     <Sun />
@@ -24,6 +24,7 @@ const App = () => (
         planetTexture={planet.planetTexture}
         rimHex={planet.rimHex}
         rings={planet.rings}
+        moon={planet.moon}
       />
     ))}
     

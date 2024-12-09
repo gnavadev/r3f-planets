@@ -26,7 +26,12 @@
     "planetSize": 1.17,
     "planetRotationSpeed": 0.01,
     "planetRotationDirection": "counterclockwise",
-    "planetTexture": "/assets/2k_earth_daymap.jpg"
+    "planetTexture": "/assets/2k_earth_daymap.jpg",
+    "moon": {
+      "distance": 2,
+      "size": 0.2925,
+      "texture": "/assets/2k_moon.jpg"
+    }
   },
   {
     "orbitSpeed": 0.00241,
@@ -58,8 +63,8 @@
     "planetTexture": "/assets/2k_saturn.jpg",
     "rimHex": 14122802,
     "rings": {
-      "ringsSize": 5,
-      "ringsTexture": "/assets/saturn-rings.jpg"
+      "size": 5,
+      "texture": "/assets/saturn-rings.jpg"
     }
   },
   {
@@ -72,7 +77,7 @@
     "planetTexture": "/assets/2k_uranus.jpg",
     "rimHex": 10136386,
     "rings": {
-      "ringsSize": 3,
+      "size": 3,
       "ringsTexture": "/assets/uranus-rings.jpg"
     }
   },

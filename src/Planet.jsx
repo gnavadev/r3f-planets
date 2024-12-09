@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { TextureLoader, Color, DoubleSide, AdditiveBlending } from "three";
 import { IcosahedronGeometry } from "three";
-import { ShaderMaterial} from "three";
+import { ShaderMaterial } from "three";
 
 const Planet = ({
   orbitSpeed = 1,
@@ -15,6 +15,7 @@ const Planet = ({
   rimHex = 0x0088ff,
   facingHex = 0x000000,
   rings = null,
+  moon = null,
 }) => {
   const planetGroupRef = useRef();
   const orbitRef = useRef(); 
@@ -32,19 +33,19 @@ const Planet = ({
     }
   });
 
-  const planetGlowMaterial = new ShaderMaterial({
+  const planetAtmosphereMaterial = new ShaderMaterial({
     uniforms: {
-        rimColor: { value: new Color(rimHex) },
-        centerColor: { value: new Color(facingHex) },
-        fresnelBias: { value: 0.1 },
-        fresnelIntensity: { value: 2.0 },
-        fresnelExponent: { value: 3.5 },
-        glowOpacity: { value: 1.0 },
+        atmosphereRimColor: { value: new Color(rimHex) },
+        atmosphereCenterColor: { value: new Color(facingHex) },
+        atmosphereBias: { value: 0.05 },
+        atmosphereIntensity: { value: 2.5 },
+        atmosphereExponent: { value: 4.0 }, 
+        atmosphereOpacity: { value: 1.0 },
     },
     vertexShader: `
-        uniform float fresnelBias;
-        uniform float fresnelIntensity;
-        uniform float fresnelExponent;
+        uniform float atmosphereBias;
+        uniform float atmosphereIntensity;
+        uniform float atmosphereExponent;
 
         varying float viewAngleFactor;
 
@@ -55,23 +56,23 @@ const Planet = ({
             vec3 worldSpaceNormal = normalize(mat3(modelMatrix[0].xyz, modelMatrix[1].xyz, modelMatrix[2].xyz) * normal);
             vec3 viewDirection = normalize(worldSpacePosition.xyz - cameraPosition);
 
-            viewAngleFactor = fresnelBias + fresnelIntensity * pow(1.0 + dot(viewDirection, worldSpaceNormal), fresnelExponent);
+            viewAngleFactor = atmosphereBias + atmosphereIntensity * pow(1.0 + dot(viewDirection, worldSpaceNormal), atmosphereExponent);
 
             gl_Position = projectionMatrix * viewSpacePosition;
         }
     `,
     fragmentShader: `
-        uniform vec3 rimColor;
-        uniform vec3 centerColor;
-        uniform float glowOpacity;
+        uniform vec3 atmosphereRimColor;
+        uniform vec3 atmosphereCenterColor;
+        uniform float atmosphereOpacity;
 
         varying float viewAngleFactor;
 
         void main() {
             float blendFactor = clamp(viewAngleFactor, 0.0, 1.0);
-            vec3 glowColor = mix(centerColor, rimColor, blendFactor);
+            vec3 glowColor = mix(atmosphereCenterColor, atmosphereRimColor, blendFactor);
             
-            gl_FragColor = vec4(glowColor, blendFactor * glowOpacity);
+            gl_FragColor = vec4(glowColor, blendFactor * atmosphereOpacity);
         }
     `,
     transparent: true,
@@ -91,21 +92,30 @@ const Planet = ({
           <meshPhongMaterial map={map} colorSpace={AdditiveBlending} />
         </mesh>
 
-        <mesh scale={[1.1, 1.1, 1.1]} geometry={new IcosahedronGeometry(planetSize, 12)} material={planetGlowMaterial} />
+        <mesh scale={[1.1, 1.1, 1.1]} geometry={new IcosahedronGeometry(planetSize, 12)} material={planetAtmosphereMaterial} />
 
         {rings && (
           <mesh rotation={[Math.PI / 2, 0, 0]}>
             <ringGeometry
-              args={[planetSize + 0.1, planetSize + 0.1 + rings.ringsSize, 128]}
+              args={[planetSize + 0.1, planetSize + 0.1 + rings.size, 128]}
             />
             <meshBasicMaterial
-              map={loader.load(rings.ringsTexture)}
+              map={loader.load(rings.texture)}
               side={DoubleSide}
               transparent
               depthWrite={false}
               opacity={0.8}
             />
           </mesh>
+        )}
+
+        {moon && (
+          <group position={[planetSize + moon.distance, 2, 0]}>
+            <mesh>
+              <sphereGeometry args={[moon.size, 32, 32]} />
+              <meshPhongMaterial map={loader.load(moon.texture)} />
+            </mesh>
+          </group>
         )}
       </group>
     </group>
